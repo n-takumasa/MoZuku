@@ -65,7 +65,8 @@ jobs:
           export PATH="/tmp/libtool-bin:${LIBTOOL_DIR}:$PATH"
           export LIBTOOLIZE="${LIBTOOL_DIR}/glibtoolize"
           export LIBTOOL="${LIBTOOL_DIR}/glibtool"
-          autoreconf -fi
+          export ACLOCAL_PATH="$(brew --prefix gettext)/share/aclocal:${ACLOCAL_PATH}"
+          ./autogen.sh
           ./configure --prefix=/usr/local --with-charset=UTF8
           make -j2
           make check || true
@@ -235,6 +236,7 @@ jobs:
           cd cabocha
           sed -i '1i #include <unordered_map>' src/common.h
           sed -i 's/std::hash_map/std::unordered_map/g' src/common.h
+          sed -i 's|#include <string>|#include <string>\n#ifdef _WIN32\n#include <windows.h>\nnamespace CaboCha { inline std::wstring Utf8ToWide(const std::string &s){ int len = MultiByteToWideChar(CP_UTF8,0,s.c_str(),-1,NULL,0); std::wstring w(len,0); MultiByteToWideChar(CP_UTF8,0,s.c_str(),-1,&w[0],len); if(!w.empty() && w.back()==L'\\0') w.pop_back(); return w; } }\n#endif|' src/common.h
           autoreconf -i
           ./configure --with-charset=UTF8 --with-mecab-config=/mingw64/bin/mecab-config --with-crfpp-config=/mingw64/bin/crf-config --prefix=/mingw64 CXXFLAGS="-std=c++11"
           make -j2
