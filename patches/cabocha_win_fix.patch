@@ -1,7 +1,19 @@
 diff --git a/src/common.h b/src/common.h
+index 197ea68..939ed0d 100644
 --- a/src/common.h
 +++ b/src/common.h
-@@ -171,4 +171,24 @@ struct hash<uint64> {
+@@ -131,7 +131,9 @@ class wlog {
+ #include <hash_map>
+ #include <hash_set>
+ #if _MSC_VER < 1310 || _MSC_VER >= 1600
+-using std::hash_map;
++// using std::hash_map;
++#include <unordered_map>
++#define hash_map unordered_map
+ #else
+ using stdext::hash_map;
+ #endif
+@@ -171,4 +173,24 @@ struct hash<uint64> {
  }
  #endif
  #endif
