@@ -17,6 +17,11 @@ jobs:
         os: [windows-latest]
 
     steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -253,6 +258,7 @@ jobs:
         run: |
           git clone https://github.com/taku910/cabocha.git
           cd cabocha
+          patch -p1 -i ../patches/cabocha_win_fix.patch
           autoreconf -i
           ./configure --with-charset=UTF8 --with-mecab-config=/mingw64/bin/mecab-config --with-crfpp-config=/mingw64/bin/crf-config --prefix=/mingw64 CXXFLAGS="-std=c++11"
           make -j2
