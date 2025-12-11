@@ -1,13 +1,12 @@
 diff --git a/src/common.h b/src/common.h
 --- a/src/common.h
 +++ b/src/common.h
-@@ -171,4 +171,31 @@ struct hash<uint64> {
+@@ -171,4 +171,24 @@ struct hash<uint64> {
  }
  #endif
  #endif
 +
 +#include <string>
-+#include <unordered_map>
 +#ifdef _WIN32
 +#include <windows.h>
 +inline std::wstring Utf8ToWideWin(const char *input) {
@@ -23,14 +22,7 @@ diff --git a/src/common.h b/src/common.h
 +  return w;
 +}
 +#undef WPATH
-+#define WPATH(path) (CaboCha::Utf8ToWideWin(path).c_str())
++#define WPATH(path) (Utf8ToWideWin(path).c_str())
 +#endif
-+using std::string;
-+using std::vector;
-+using std::ostream;
-+using std::istream;
-+using std::stringstream;
-+using std::unordered_map;
 +
  #endif
- 
