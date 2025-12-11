@@ -1,14 +1,11 @@
 diff --git a/src/common.h b/src/common.h
 --- a/src/common.h
 +++ b/src/common.h
-@@
--#include <string>
--using std::string;
--using std::vector;
--using std::ostream;
--using std::istream;
--using std::stringstream;
--using std::hash_map;
+@@ -171,4 +171,31 @@ struct hash<uint64> {
+ }
+ #endif
+ #endif
++
 +#include <string>
 +#include <unordered_map>
 +#ifdef _WIN32
@@ -34,3 +31,6 @@ diff --git a/src/common.h b/src/common.h
 +using std::istream;
 +using std::stringstream;
 +using std::unordered_map;
++
+ #endif
+ 
